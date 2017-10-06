@@ -5,7 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Random;
 
 import javax.swing.Timer;
 
@@ -13,9 +12,8 @@ import graphics.Camera;
 import graphics.Drawable;
 import physics.PhysicsObject;
 import physics.Timeout;
-import sprites.ships.AIShip;
-import sprites.ships.BasicShip;
-import sprites.statics.Planet;
+import sprites.mobs.Player;
+import sprites.statics.Tree;
 
 public class World {
 
@@ -24,7 +22,7 @@ public class World {
 	public static Timer timer;
 	public static int timerDelay = 100;
 	
-	public static BasicShip player;
+	public static Player player;
 	private static ArrayList<Drawable> visuals = new ArrayList<Drawable>();
 	private static ArrayList<PhysicsObject> objects = new ArrayList<PhysicsObject>(); 
 	private static ArrayList<Timeout> timeouts = new ArrayList<Timeout>();
@@ -34,23 +32,29 @@ public class World {
 	private static ArrayList<Timeout> timeoutsToRemove = new ArrayList<Timeout>();
 	
 	public static long score = 0;
-	public static long enemyShips = 0;
+	public static long enemies = 0;
+	
+	/**
+	 * In milliseconds
+	 */
+	public static long time = 0;
 
 	private static Timer spawnTimer;
 	
 	public static void initialize() {		
-		player = new BasicShip(0f, 0f);
-		add(new Planet(500, 500, 50));
+		player = new Player();
+		add(new Tree(500, 500, 50));
 		
-		add(new AIShip(1200, 1200));
+		/* add(new AIShip(1200, 1200));
 		add(new AIShip(0, 1200));
 		add(new AIShip(1200, 2400));
-		enemyShips += 3;
+		enemies += 3; */
 		
 		timer = new Timer(timerDelay, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				player.timeTick();
+				time += timerDelay;
 				
 				int size = timeouts.size();
 				for (int i = size - 1; i >= 0; i--) {
@@ -73,20 +77,20 @@ public class World {
 		timer.setRepeats(true);
 		timer.start();
 		
-		Random rand = new Random();
+		/* Random rand = new Random();
 		spawnTimer = new Timer(6000, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (enemyShips < 15) {
+				if (enemies < 15) {
 					for (int i = 0; i < 3; i++) {
 						add(new AIShip(rand.nextInt(2400) - 1200, rand.nextInt(2400) - 1200));
-						enemyShips++;
+						enemies++;
 					}
 				}
 			}
 		});
 		spawnTimer.setRepeats(true);
-		spawnTimer.start();
+		spawnTimer.start(); */
 	}
 	
 	public static void graphicsUpdate() {
@@ -111,16 +115,16 @@ public class World {
 	
 	public static void drawPlayerStats() {
 		
-		String stats = player.equipedWeapon.ammoInClip() + " / " + player.equipedWeapon.totalAmmo(); 
+		//String stats = player.equipedWeapon.ammoInClip() + " / " + player.equipedWeapon.totalAmmo(); 
 		String health = Double.toString(player.health());
 		String scoreLength = "Score " + Long.toString(score);
 		
 		ctx.setColor(Color.WHITE);
 		
-		ctx.drawString(stats, 10, Camera.CAM_HEIGHT - 35);
+		//ctx.drawString(stats, 10, Camera.CAM_HEIGHT - 35);
 		ctx.drawString(health, Camera.CAM_WIDTH - 45, Camera.CAM_HEIGHT - 35);
 		ctx.drawString(scoreLength, 10, 20);
-		ctx.drawString(Long.toString(enemyShips), Camera.CAM_WIDTH - 45, 20);
+		ctx.drawString(Long.toString(enemies), Camera.CAM_WIDTH - 45, 20);
 		
 	}
 	

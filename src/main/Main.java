@@ -21,7 +21,7 @@ public class Main extends JFrame {
 		
 		add(new Surface());
 		
-		setTitle("Space");
+		setTitle("Feudal Test Game");
 		setSize(Camera.CAM_WIDTH, Camera.CAM_HEIGHT);
 		setLocationRelativeTo(null);
 		setResizable(false);

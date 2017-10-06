@@ -111,6 +111,37 @@ public class Vector implements General2D {
 		this.y *= l;
 	}
 	
+	public void set(Vector other) {
+		this.x = other.x;
+		this.y = other.y;
+	}
+	
+	/**
+	 * Rotate the vector relative to its current rotation
+	 * 
+	 * @param radians The number of radians to rotate by. Positive is CCW.
+	 */
+	public void rotate(double radians) {
+		double length = this.length();
+		double rotation = Math.atan2(this.y, this.x) + radians;
+		
+		this.x = length * Math.cos(rotation);
+		this.y = length * Math.sin(rotation);
+	}
+	
+	/**
+	 * Calculate length of vector, and point that length
+	 * in the direction given.
+	 * 
+	 * @param radians The direction to point in
+	 */
+	public void setRotation(double radians) {
+		double length = this.length();
+		
+		this.x = length * Math.cos(radians);
+		this.y = length * Math.sin(radians);
+	}
+	
 	/**
 	 * Finds length of the vector. Uses the square root function so
 	 * this is a bit expensive

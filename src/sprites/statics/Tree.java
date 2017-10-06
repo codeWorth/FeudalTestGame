@@ -13,7 +13,7 @@ import util.math.Point;
 import util.math.Point.PointType;
 import util.math.Vector;
 
-public class Planet implements Drawable, PhysicsObject {
+public class Tree implements Drawable, PhysicsObject {
 
 	public static final int collisionHash = 2;
 	
@@ -30,7 +30,7 @@ public class Planet implements Drawable, PhysicsObject {
 	
 	private Vector speed = new Vector(0, 0); //maybe planets can move eventually?
 	
-	public Planet(double x, double y, double radius) {
+	public Tree(double x, double y, double radius) {
 		this.position = new Point(x, y, PointType.GAME);
 		this.radius = radius;
 		
@@ -45,7 +45,7 @@ public class Planet implements Drawable, PhysicsObject {
 	@Override
 	public void draw(Graphics2D ctx) {
 		
-		ctx.setPaint(Color.BLUE);
+		ctx.setPaint(Color.GREEN);
 		
 		Ellipse2D.Double outline = new Ellipse2D.Double(position.screenX(), position.screenY(), this.radius*2, this.radius*2);
 		ctx.fill(outline);
